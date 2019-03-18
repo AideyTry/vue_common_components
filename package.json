@@ -1,0 +1,29 @@
+{
+  "name": "vue_common_components",
+  "version": "1.0.0",
+  "description": "this is a vue common components project",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack-dev-server --open --hot --porgress",
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "jason",
+  "license": "ISC",
+  "dependencies": {
+    "vue": "^2.6.9",
+    "vue-router": "^3.0.2"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "css-loader": "^2.1.1",
+    "html-webpack-plugin": "^3.2.0",
+    "vue-loader": "^15.7.0",
+    "vue-template-compiler": "^2.6.9",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0",
+    "webpack-dev-server": "^3.2.1"
+  }
+}
