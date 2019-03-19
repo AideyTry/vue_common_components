@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav>
-      <h2>公共可复用组件</h2>
+      <h2>公共可复用vue组件</h2>
     </nav>
   </div>
 </template>
