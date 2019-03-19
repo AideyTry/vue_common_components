@@ -42,11 +42,12 @@ export default {
 }
 </script>
 
-<style lang="css" scoped>
+<style>
     .header h2 {
         text-align: center;
     }
     .wraper .sidebar ul li {
         cursor: pointer;
+        list-style: none;
     }
 </style>
