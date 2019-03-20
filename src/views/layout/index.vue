@@ -1,7 +1,7 @@
 <template>
   <div class="wraper">
     <header class="header">
-      <h2>公共可复用组件1</h2>
+      <h2>公共可复用组件</h2>
     </header>
     <aside class="sidebar">
       <nav>
@@ -42,12 +42,12 @@ export default {
 }
 </script>
 
-<style>
+<style lang="css">
     .header h2 {
         text-align: center;
     }
     .wraper .sidebar ul li {
         cursor: pointer;
-        list-style: none;
+        /* list-style: none; */
     }
 </style>

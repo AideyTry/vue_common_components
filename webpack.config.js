@@ -32,15 +32,15 @@ module.exports = {
       rules: [
         {
           test: /\.vue$/,
-          use: 'vue-loader'
+          loader: 'vue-loader'
         },
         {
           test: /\.css$/,
-          loader: 'css-loader'
+          use: ['vue-style-loader', 'css-loader']
         },
         {
           test: /\.js$/,
-          use: 'babel-loader',
+          loader: 'babel-loader',
           exclude: /node_modules/
         }
       ]
