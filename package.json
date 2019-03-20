@@ -8,7 +8,7 @@
     "build": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "jason",
+  "author": "jason19901028",
   "license": "ISC",
   "dependencies": {
     "vue": "^2.6.9",

@@ -9,6 +9,8 @@
           <li
             v-for="(nav, index) in navs"
             :key="index"
+            :class="activeIndex === index ? 'active': ''"
+            @click="checkedNav(index, nav.name)"
           >
             <span>{{nav.title}}</span>
           </li>
@@ -16,7 +18,7 @@
       </nav>
     </aside>
     <section class="section">
-
+      <router-view></router-view>
     </section>
   </div>
 </template>
@@ -27,6 +29,7 @@ export default {
   name: 'layout',
   data () {
     return {
+      activeIndex: '',
       navs: [
         {
           name: 'search',
@@ -38,16 +41,29 @@ export default {
         }
       ]
     }
+  },
+  methods: {
+    checkedNav (index, name) {
+      this.activeIndex = index
+      this.$router.push({ name: name })
+
+    }
   }
 }
 </script>
 
 <style lang="css">
-    .header h2 {
-        text-align: center;
-    }
-    .wraper .sidebar ul li {
-        cursor: pointer;
-        /* list-style: none; */
-    }
+.header h2 {
+  text-align: center;
+}
+.wraper .sidebar ul li {
+  cursor: pointer;
+  padding: 10px 0 10px 20px;
+}
+.wraper .sidebar ul li:active {
+  color: #1890ff;
+}
+.active {
+  color: #1890ff;
+}
 </style>
