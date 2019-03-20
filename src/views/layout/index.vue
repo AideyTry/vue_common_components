@@ -1,7 +1,7 @@
 <template>
   <div class="wraper">
     <header class="header">
-      <h2>公共可复用组件</h2>
+      <h2>公共可复用组件1</h2>
     </header>
     <aside class="sidebar">
       <nav>
