@@ -3,23 +3,25 @@
     <header class="header">
       <h2>公共可复用组件</h2>
     </header>
-    <aside class="sidebar">
-      <nav>
-        <ul>
-          <li
-            v-for="(nav, index) in navs"
-            :key="index"
-            :class="activeIndex === index ? 'active': ''"
-            @click="checkedNav(index, nav.name)"
-          >
-            <span>{{nav.title}}</span>
-          </li>
-        </ul>
-      </nav>
-    </aside>
-    <section class="section">
-      <router-view></router-view>
-    </section>
+    <div class="main">
+      <aside class="sidebar">
+        <nav>
+          <ul>
+            <li
+              v-for="(nav, index) in navs"
+              :key="index"
+              :class="activeIndex === index ? 'active': ''"
+              @click="checkedNav(index, nav.name)"
+            >
+              <span>{{nav.title}}</span>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+      <section class="section">
+        <router-view></router-view>
+      </section>
+    </div>
   </div>
 </template>
 
@@ -65,5 +67,7 @@ export default {
 }
 .active {
   color: #1890ff;
+}
+.wraper {
 }
 </style>
