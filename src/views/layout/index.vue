@@ -3,8 +3,8 @@
     <header class="header">
       <h2>公共可复用组件</h2>
     </header>
-    <div class="main">
-      <aside class="sidebar">
+    <div class="main clearfix">
+      <aside class="sidebar fl">
         <nav>
           <ul>
             <li
@@ -18,7 +18,7 @@
           </ul>
         </nav>
       </aside>
-      <section class="section">
+      <section class="section fr">
         <router-view></router-view>
       </section>
     </div>
@@ -26,7 +26,6 @@
 </template>
 
 <script>
-import 'src/assets/reset.css'
 export default {
   name: 'layout',
   data () {
@@ -54,7 +53,13 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="scss" scoped>
+body {
+  margin: 0;
+  padding: 0;
+}
+@import "@/assets/index.scss";
+
 .header h2 {
   text-align: center;
 }
@@ -69,5 +74,23 @@ export default {
   color: #1890ff;
 }
 .wraper {
+  .header {
+    height: 60px;
+    line-height: 60px;
+    box-sizing: border-box;
+  }
+  .main {
+    height: calc(100vh - 60px);
+    .sidebar {
+      width: 20%;
+      height: inherit;
+      border-right: 1px solid $border-color-base;
+    }
+    .section {
+      width: 80%;
+      position: absolute;
+      left: 20%;
+    }
+  }
 }
 </style>

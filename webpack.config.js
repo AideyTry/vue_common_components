@@ -38,10 +38,10 @@ module.exports = {
           test: /\.css$/,
           use: ['vue-style-loader', 'css-loader']
         },
-        // {
-        //   test: /\.scss$/,
-        //   loaders: ['style', 'css', 'sass']
-        // },
+        {
+          test: /\.scss$/,
+          loaders: ['style-loader', 'css-loader', 'sass-loader']
+        },
         {
           test: /\.js$/,
           loader: 'babel-loader',
