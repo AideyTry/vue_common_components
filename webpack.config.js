@@ -24,7 +24,8 @@ module.exports = {
       'vue$': 'vue/dist/vue.min.js', //主要改变import vue时的指向。别名
       '@': path.join(__dirname, './src'),
       'src': path.join(__dirname, './src'),
-      'views': path.join(__dirname, './src/views')
+      'views': path.join(__dirname, './src/views'),
+      'api': path.join(__dirname, './src/api')
     }
   },
   //loader规则

@@ -21,7 +21,7 @@ export default {
         pageSize: 200
       }
       getCar(11, page).then(res  => {
-        consolt.log('res=', res)
+        console.log('res=', res)
       })
     }
   }

@@ -78,18 +78,22 @@ body {
     height: 60px;
     line-height: 60px;
     box-sizing: border-box;
+    border-bottom: 1px solid $border-color-base;
+    color: $heading-color;
   }
   .main {
     height: calc(100vh - 60px);
     .sidebar {
-      width: 20%;
+      width: 15%;
       height: inherit;
       border-right: 1px solid $border-color-base;
+      color: $heading-color;
     }
     .section {
-      width: 80%;
+      width: 85%;
       position: absolute;
-      left: 20%;
+      left: 15%;
+      color: $text-color;
     }
   }
 }
