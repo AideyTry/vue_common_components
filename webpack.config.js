@@ -25,7 +25,8 @@ module.exports = {
       '@': path.join(__dirname, './src'),
       'src': path.join(__dirname, './src'),
       'views': path.join(__dirname, './src/views'),
-      'api': path.join(__dirname, './src/api')
+      'api': path.join(__dirname, './src/api'),
+      'assets': path.join(__dirname, './src/assets')
     }
   },
   //loader规则
@@ -47,6 +48,10 @@ module.exports = {
           test: /\.js$/,
           loader: 'babel-loader',
           exclude: /node_modules/
+        },
+        {
+          test: /\.(png|svg|jpg|gif|woff|woff2|svg|eot|ttf)$/,
+          loader: 'url-loader'
         }
       ]
   },

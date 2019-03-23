@@ -8,7 +8,7 @@ export default {
   name: 'search',
   data () {
     return {
-
+      
     }
   },
   mounted () {
