@@ -75,14 +75,14 @@ body {
 }
 .wraper {
   .header {
-    height: 60px;
-    line-height: 60px;
+    height: 64px;
+    line-height: 64px;
     box-sizing: border-box;
     border-bottom: 1px solid $border-color-base;
     color: $heading-color;
   }
   .main {
-    height: calc(100vh - 60px);
+    height: calc(100vh - 64px);
     .sidebar {
       width: 15%;
       height: inherit;
