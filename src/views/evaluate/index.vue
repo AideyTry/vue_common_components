@@ -19,22 +19,22 @@
         class="submit"
         v-if="!tabIndex"
       >
-        <evaluate
+        <stars
           :max="5"
           :starId="reviewOptions && reviewOptions.id"
           @review-changed="reviewChanged"
-        ></evaluate>
+        ></stars>
         <div
           class="evaluate-item"
           v-for="(item, index) in (reviewOptions && reviewOptions.children)"
           :key="index"
         >
           <span class="item-name">{{item.name}}</span>
-          <evaluate
+          <stars
             :light-star="require('assets/images/review-star-active.png')"
             :grey-star="require('assets/images/review-star-default.png')"
             @review-changed="reviewChanged"
-          ></evaluate>
+          ></stars>
         </div>
         <input
           type="textarea"
@@ -48,28 +48,29 @@
         </footer>
       </div>
       <div
-        class="review"
+        class="review-wraper"
         v-else
       >
-        <div class="review-title">
+        <div class="review">
           <h3>本次服务评价</h3>
-          <evaluate
+          <stars
             :score="intValue(reviews[0])"
             :light-star="require('assets/images/star-big-active.png')"
             :grey-star="require('assets/images/star-big-default.png')"
             :readOnly="true"
-          ></evaluate>
+          ></stars>
           <div
             v-for="(item, index) in newReviews"
             :key="index"
+            class="review-item"
           >
             <span>{{item.evaluateName}}</span>
-            <evaluate
+            <stars
               :score="intValue(item)"
               :light-star="require('assets/images/review-star-active.png')"
               :grey-star="require('assets/images/review-star-default.png')"
               :readOnly="true"
-            ></evaluate>
+            ></stars>
           </div>
         </div>
       </div>
@@ -78,12 +79,12 @@
 </template>
 
 <script>
-import Evaluate from '@/components/evaluate'
+import stars from '@/components/stars'
 import { reviewOptions, submitReview, orderEvaluate } from 'api/order'
 export default {
   name: 'evaluate-wraper',
   components: {
-    Evaluate
+    stars
   },
   data () {
     return {
@@ -182,16 +183,28 @@ export default {
   }
   .section {
     margin: 10px 0;
+    display: flex;
+    justify-content: center;
     .submit {
       margin-bottom: 10px;
+      .evaluate-item {
+        display: flex;
+        justify-content: center;
+      }
       .footer {
         height: 69px;
         line-height: 69px;
         text-align: center;
       }
     }
-    .review {
-      .review-title {
+    .review-wraper {
+      display: flex;
+      justify-content: center;
+      .review {
+        .review-item {
+          display: flex;
+          justify-content: center;
+        }
       }
     }
   }

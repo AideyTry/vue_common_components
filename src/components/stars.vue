@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: 'evaluate',
+  name: 'stars',
   props: {
     max: {
       type: Array,
@@ -69,9 +69,9 @@ export default {
 
 <style lang="scss" scoped>
 .stars {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
 }
 
 .star {
