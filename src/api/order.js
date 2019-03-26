@@ -24,3 +24,11 @@ export function getReviews (params) {
     method: 'get',
   })
 }
+
+// 工单评价
+export function orderEvaluate (params) {
+  return request({
+    url: `/order/service/evaluate/detail/${params.id}`,
+    method: 'get'
+  })
+}

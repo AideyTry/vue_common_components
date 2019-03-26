@@ -4,7 +4,7 @@
       class="star"
       v-for="(item, index) in max"
       :key="index"
-      :src="(index + 1) <= activeIndex ? lightStar : greyStar"
+      :src="(index + 1) <= activeIndx ? lightStar : greyStar"
       @click="rank(index)"
       alt=""
     >
@@ -26,6 +26,10 @@ export default {
       type: Boolean,
       default: false
     },
+    score: {
+      type: Number,
+      default: 0
+    },
     lightStar: {
       type: String,
       default: require('assets/images/star-big-active.png')
@@ -41,18 +45,21 @@ export default {
     }
   },
   computed: {
-    // currentSrc (index) {
-    //     let src = (index + 1) <= this.activeIndex ? this.lightStar : this.greyStar
-    //     console.log('src=', src)
-    //     // let context = require.context('./src/assets/images', false, /\.png$/)
-    //     // let keys = context.keys()
-    //     return require(`${src}`)
-    // }
+    activeIndx () {
+      if (this.score) {
+        return this.score
+      } else {
+        return this.activeIndex
+      }
+    }
   },
   mounted () {
   },
   methods: {
     rank (index) {
+      if (this.readOnly) {
+        return
+      }
       this.activeIndex = index + 1
       this.$emit('review-changed', { starId: this.starId, activeIndex: this.activeIndex })
     }

@@ -47,43 +47,39 @@
           ><span>提交</span></button>
         </footer>
       </div>
-      <!-- <div
+      <div
         class="review"
         v-else
       >
         <div class="review-title">
-          <span>本次服务评价</span>
+          <h3>本次服务评价</h3>
+          <evaluate
+            :score="intValue(reviews[0])"
+            :light-star="require('assets/images/star-big-active.png')"
+            :grey-star="require('assets/images/star-big-default.png')"
+            :readOnly="true"
+          ></evaluate>
+          <div
+            v-for="(item, index) in newReviews"
+            :key="index"
+          >
+            <span>{{item.evaluateName}}</span>
+            <evaluate
+              :score="intValue(item)"
+              :light-star="require('assets/images/review-star-active.png')"
+              :grey-star="require('assets/images/review-star-default.png')"
+              :readOnly="true"
+            ></evaluate>
+          </div>
         </div>
-        <div class="dashed-line"></div>
-        <div class="satisfied">
-          <span>{{review.desc(reviews[0].score)}}</span>
-          <stars
-            :activeIndex="reviews[0].score"
-            :read-only="true"
-          ></stars>
-        </div>
-        <div
-          class="item"
-          v-for="(item, index) in reviews"
-          :key="index"
-        >
-          <span class="item-name">{{reviews[index].evaluateName}}</span>
-          <stars
-            :activeIndex="reviews[index].score"
-            :read-only="true"
-            :light-star="require('assets/images/review-star-active.png')"
-            :grey-star="require('assets/images/review-star-default.png')"
-          ></stars>
-          <span class="star-text">{{review.desc(reviews[index].score)}}</span>
-        </div>
-      </div> -->
+      </div>
     </section>
   </div>
 </template>
 
 <script>
 import Evaluate from '@/components/evaluate'
-import { reviewOptions, submitReview, getReviews } from 'api/order'
+import { reviewOptions, submitReview, orderEvaluate } from 'api/order'
 export default {
   name: 'evaluate-wraper',
   components: {
@@ -93,6 +89,7 @@ export default {
     return {
       reviewOptions: null,
       reviews: {},
+      newReviews: [],
       comment: '',
       tabIndex: 0
     }
@@ -101,9 +98,11 @@ export default {
     this.getReviewOptions()
   },
   methods: {
+    intValue (obj = {}) {
+      return Math.round(obj.score)
+    },
     getReviewOptions () {
       reviewOptions().then((res) => {
-        console.log('res===', res)
         this.reviewOptions = res.data.data
         console.log('this.reviewOptions=', this.reviewOptions)
       })
@@ -115,7 +114,7 @@ export default {
     changeTab (index) {
       this.tabIndex = index
       if (index) {
-        this.getReviews(this.reviewOptions && this.reviewOptions.children.length)
+        this.getOrderEvaluate()
       }
     },
     submitReview () {
@@ -142,18 +141,18 @@ export default {
         alert('评价成功！')
       })
     },
-    getReviews (length = 3) {
+    getOrderEvaluate () {
       let params = {
-        companyId: 78,
-        serviceId: 10445521
+        id: 10441722
       }
-      getReviews(params).then((res) => {
-        // if (res.result !== 0) {
-        //   // alert(res.desc)
-        //   return
-        // }
-
-        this.reviews.slice(0, length + 1)
+      orderEvaluate(params).then((res) => {
+        let { desc, data } = res
+        if (data.result !== 0) {
+          alert(desc)
+          return
+        }
+        this.reviews = data.data.detailVOList.slice(0, 4)
+        this.newReviews = data.data.detailVOList.slice(1, 4)
       })
     }
   }
