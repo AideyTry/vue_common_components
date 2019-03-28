@@ -15,6 +15,8 @@
       <li
         v-for="(item, index) in options"
         :key="index"
+        @mousedown="selectChange(item, options)"
+        @mouseenter="mouseEnter(index)"
       >
         <div
           class="li-item"
@@ -78,7 +80,8 @@ export default {
   data () {
     return {
       queryString: this.value,
-      flag: false
+      flag: false,
+      currentIndex: null
     }
   },
   computed: {
@@ -108,6 +111,17 @@ export default {
     },
     close () {
       this.flag = false
+    },
+    mouseEnter (index) {
+      this.currentIndex = index
+    },
+    selectChange (item, options) {
+      if (this.options[this.currentIndex].code) {
+        this.queryString = `${this.options[this.currentIndex].code || ''} ${this.options[this.currentIndex].name || ''} ${this.options[this.currentIndex].phone || ''}`
+      }
+      if (this.options[this.currentIndex].modelName && !this.options[this.currentIndex].code) {
+        this.queryString = `${this.options[this.currentIndex].brandName || ''} ${this.options[this.currentIndex].lineName || ''} ${this.options[this.currentIndex].modelName || ''}`
+      }
     }
   }
 }
