@@ -49,20 +49,16 @@ export default {
   directives: {
     htmls: {
       bind: (el, binding) => {
-        // console.log('1===', el, binding)
         el.innerHTML = `<span>${binding.value.code || ''}</span>&nbsp;<span>${binding.value.phone || ''}</span>&nbsp;<span>${binding.value.name || ''}</span>`
       },
       update: (el, binding) => {
-        // console.log('2===', el, binding)
       },
       unbind: (el, binding) => {
-        // console.log('3===', el, binding)
       }
     },
     clickoutside: {
       bind: (el, binding, vnode) => {
         const documentHandler = (e) => {
-          console.log('e=', e)
           if (el.contains(e.target)) {
             return false
           }
