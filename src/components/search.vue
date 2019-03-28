@@ -3,6 +3,7 @@
     <el-input
       :title="queryString"
       v-model="queryString"
+      v-clickoutside="close"
       @focus="handleFocus"
       @input="onChange"
     >
@@ -48,14 +49,33 @@ export default {
   directives: {
     htmls: {
       bind: (el, binding) => {
-        console.log('1===', el, binding)
+        // console.log('1===', el, binding)
         el.innerHTML = `<span>${binding.value.code || ''}</span>&nbsp;<span>${binding.value.phone || ''}</span>&nbsp;<span>${binding.value.name || ''}</span>`
       },
       update: (el, binding) => {
-        console.log('2===', el, binding)
+        // console.log('2===', el, binding)
       },
       unbind: (el, binding) => {
-        console.log('3===', el, binding)
+        // console.log('3===', el, binding)
+      }
+    },
+    clickoutside: {
+      bind: (el, binding, vnode) => {
+        const documentHandler = (e) => {
+          console.log('e=', e)
+          if (el.contains(e.target)) {
+            return false
+          }
+          if (binding.expression) {
+            binding.value(e)
+          }
+        }
+        el._vueClickOutside_ = documentHandler
+        document.addEventListener('click', documentHandler)
+      },
+      unbind: (el, binding) => {
+        document.removeEventListener('click', el._vueClickOutside_)
+        delete el._vueClickOutside_
       }
     }
   },
@@ -89,6 +109,9 @@ export default {
         return
       }
       this.$emit('text-changed', this.queryString)
+    },
+    close () {
+      this.flag = false
     }
   }
 }
