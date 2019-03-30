@@ -76,8 +76,8 @@ export default {
 
 .star {
   display: inline-block;
-  width: 27px;
-  height: 25px;
+  width: 17px;
+  height: 17px;
   margin-right: 6px;
 }
 </style>

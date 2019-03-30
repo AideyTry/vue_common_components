@@ -13,6 +13,7 @@
       v-if="activated"
     >
       <li
+        :class="{current:(currentIndex === index)}"
         v-for="(item, index) in options"
         :key="index"
         @mousedown="selectChange(item, options)"
@@ -151,5 +152,10 @@ input {
   border-radius: 2px;
   text-align: left;
   overflow: hidden;
+  padding: 5px 0;
+}
+.current {
+  background-color: #f0f0f0;
+  cursor: pointer;
 }
 </style>
