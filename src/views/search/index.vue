@@ -35,7 +35,7 @@ export default {
     // this.getCars()
   },
   methods: {
-    getCars () {
+    getCars (flag = false) {
       this.loading = true
       getCar(this.page, this.likename).then((res) => {
         this.loading = false
@@ -45,14 +45,17 @@ export default {
           return
         }
         this.loading = false
-        this.options = []
+        if (!flag) {
+          this.options = []
+        }
+        let options = []
         let arr = data.carList
-        let vm = this
         arr.forEach(function (val, index) {
           if (val.code) {
-            vm.options.push(val)
+            options.push(val)
           }
         })
+        this.options = options.concat()
       }).finally(() => {
         this.loading = false
       })
