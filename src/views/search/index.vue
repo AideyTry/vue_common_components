@@ -7,6 +7,7 @@
       :options.sync="options"
       :loading="loading"
       @text-changed="onTextChanged"
+      @next-page="nextPage"
     ></search>
   </div>
 </template>
@@ -22,7 +23,12 @@ export default {
   data () {
     return {
       loading: false,
-      options: []
+      options: [],
+      likename: '',
+      page: {
+        pageNum: 1,
+        pageSize: 10
+      }
     }
   },
   mounted () {
@@ -30,24 +36,8 @@ export default {
   },
   methods: {
     getCars () {
-      let page = {
-        pageNum: 1,
-        pageSize: 200
-      }
-      getCar(11, page).then(res => {
-        console.log('res=', res)
-      })
-    },
-    // 输入信息变化时 重新获取车辆列表
-    onTextChanged (query) {
-      console.log('query=', query)
-      let likename = query
-      let page = {
-        pageNum: 1,
-        pageSize: 200
-      }
       this.loading = true
-      getCar(page, likename).then((res) => {
+      getCar(this.page, this.likename).then((res) => {
         this.loading = false
         let { result, desc, data } = res.data
         if (result !== 0) {
@@ -66,6 +56,17 @@ export default {
       }).finally(() => {
         this.loading = false
       })
+    },
+    // 输入信息变化时 重新获取车辆列表
+    onTextChanged (query) {
+      console.log('query=', query)
+      this.likename = query
+      this.getCars()
+    },
+    nextPage (pageNum) {
+      this.page.pageNum = pageNum
+      console.log('this.page.pageNum=', this.page.pageNum)
+      this.getCars()
     }
   }
 }
@@ -74,10 +75,10 @@ export default {
 <style lang="scss" scoped>
 .search-wrap {
   position: relative;
-    .search-input{
-      width: 320px !important;
-      height: 36px;
-      line-height: 36px;
+  .search-input {
+    width: 320px !important;
+    height: 36px;
+    line-height: 36px;
   }
 }
 </style>

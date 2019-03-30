@@ -11,11 +11,13 @@
     <ul
       class="content"
       v-if="activated"
+      @scroll="onScroll"
     >
       <li
         :class="{current:(currentIndex === index)}"
         v-for="(item, index) in options"
         :key="index"
+        ref="lis"
         @mousedown="selectChange(item, options)"
         @mouseenter="mouseEnter(index)"
       >
@@ -82,7 +84,11 @@ export default {
     return {
       queryString: this.value,
       flag: false,
-      currentIndex: null
+      currentIndex: null,
+      page: {
+        pageNum: 1,
+        pageSize: 10
+      }
     }
   },
   computed: {
@@ -123,6 +129,15 @@ export default {
       if (this.options[this.currentIndex].modelName && !this.options[this.currentIndex].code) {
         this.queryString = `${this.options[this.currentIndex].brandName || ''} ${this.options[this.currentIndex].lineName || ''} ${this.options[this.currentIndex].modelName || ''}`
       }
+    },
+    onScroll (event) {
+      // console.log('event=', event)
+      // console.log('this.$refs.lis=', this.$refs.lis)
+      if(event.srcElement.scrollTop > (this.page.pageNum * this.page.pageSize - 10) * this.$refs.lis[0].offsetHeight){
+        console.log(1111111)
+        this.page.pageNum++
+        this.$emit('next-page', this.page.pageNum)
+      }
     }
   }
 }
@@ -152,6 +167,7 @@ input {
   border-radius: 2px;
   text-align: left;
   overflow: hidden;
+  overflow-y: scroll;
   padding: 5px 0;
 }
 .current {
