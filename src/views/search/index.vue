@@ -55,21 +55,20 @@ export default {
             options.push(val)
           }
         })
-        this.options = options.concat()
+        this.options = this.options.concat(options)
       }).finally(() => {
         this.loading = false
       })
     },
     // 输入信息变化时 重新获取车辆列表
     onTextChanged (query) {
-      console.log('query=', query)
       this.likename = query
+      this.page.pageNum = 1
       this.getCars()
     },
     nextPage (pageNum) {
       this.page.pageNum = pageNum
-      console.log('this.page.pageNum=', this.page.pageNum)
-      this.getCars()
+      this.getCars(true)
     }
   }
 }

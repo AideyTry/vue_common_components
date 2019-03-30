@@ -11,6 +11,7 @@
     <ul
       class="content"
       v-if="activated"
+      ref="ul"
       @scroll="onScroll"
     >
       <li
@@ -91,6 +92,14 @@ export default {
       }
     }
   },
+  watch: {
+    queryString(val, old) {
+      if(val !== old){
+        this.page.pageNum = 1
+        this.$refs.ul && (this.$refs.ul.scrollTop = 0)
+      }
+    }
+  },
   computed: {
     activated () {
       if (this.flag && this.queryString) {
@@ -130,11 +139,8 @@ export default {
         this.queryString = `${this.options[this.currentIndex].brandName || ''} ${this.options[this.currentIndex].lineName || ''} ${this.options[this.currentIndex].modelName || ''}`
       }
     },
-    onScroll (event) {
-      // console.log('event=', event)
-      // console.log('this.$refs.lis=', this.$refs.lis)
-      if(event.srcElement.scrollTop > (this.page.pageNum * this.page.pageSize - 10) * this.$refs.lis[0].offsetHeight){
-        console.log(1111111)
+    onScroll () {
+      if(this.$refs.ul.scrollTop > (this.page.pageNum * this.page.pageSize - this.page.pageSize) * this.$refs.lis[0].offsetHeight){
         this.page.pageNum++
         this.$emit('next-page', this.page.pageNum)
       }
@@ -168,7 +174,7 @@ input {
   text-align: left;
   overflow: hidden;
   overflow-y: scroll;
-  padding: 5px 0;
+  padding: 10px 0;
 }
 .current {
   background-color: #f0f0f0;
