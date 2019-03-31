@@ -132,12 +132,7 @@ export default {
       this.currentIndex = index
     },
     selectChange (item, options) {
-      if (this.options[this.currentIndex].code) {
-        this.queryString = `${this.options[this.currentIndex].code || ''} ${this.options[this.currentIndex].name || ''} ${this.options[this.currentIndex].phone || ''}`
-      }
-      if (this.options[this.currentIndex].modelName && !this.options[this.currentIndex].code) {
-        this.queryString = `${this.options[this.currentIndex].brandName || ''} ${this.options[this.currentIndex].lineName || ''} ${this.options[this.currentIndex].modelName || ''}`
-      }
+      this.$emit('change-input', {inputTitle: 'queryString', item: item})
     },
     onScroll () {
       if(this.$refs.ul.scrollTop > (this.page.pageNum * this.page.pageSize - this.page.pageSize) * this.$refs.lis[0].offsetHeight){

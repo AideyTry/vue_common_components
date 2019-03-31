@@ -6,8 +6,10 @@
       title="新建车辆"
       :options.sync="options"
       :loading="loading"
+      ref="search"
       @text-changed="onTextChanged"
       @next-page="nextPage"
+      @change-input="changeInput"
     ></search>
   </div>
 </template>
@@ -69,6 +71,9 @@ export default {
     nextPage (pageNum) {
       this.page.pageNum = pageNum
       this.getCars(true)
+    },
+    changeInput(obj){
+      this.$refs.search[obj.inputTitle] = `${obj.item.code || ''} ${obj.item.name || ''} ${obj.item.phone || ''}`
     }
   }
 }
