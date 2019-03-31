@@ -68,12 +68,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.stars {
-  // display: flex;
-  // align-items: center;
-  // justify-content: center;
-}
-
 .star {
   display: inline-block;
   width: 17px;
