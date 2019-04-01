@@ -3,9 +3,13 @@
     <el-input
       :title="queryString"
       v-model="queryString"
-      v-clickoutside="close"
+      ref="input"
       @focus="handleFocus"
       @input="onChange"
+      @keydown.up.native.prevent="highlight(currentIndex - 1)"
+      @keydown.down.native.prevent="highlight(currentIndex + 1)"
+      @keydown.enter.native="handleKeyEnter"
+      v-clickoutside="close"
     >
     </el-input>
     <ul
@@ -64,6 +68,8 @@ export default {
     },
     clickoutside: {
       bind: (el, binding, vnode) => {
+        console.log('el.target=', el.target)
+        console.log('binding.expression=', binding.expression)
         const documentHandler = (e) => {
           if (el.contains(e.target)) {
             return false
@@ -72,12 +78,38 @@ export default {
             binding.value(e)
           }
         }
+        console.log('el=', el)
         el._vueClickOutside_ = documentHandler
         document.addEventListener('click', documentHandler)
+
+        // if (this.activeFlag) {
+        //   document.removeEventListener('click', el._vueClickOutside_)
+        //   delete el._vueClickOutside_
+        // }
       },
       unbind: (el, binding) => {
         document.removeEventListener('click', el._vueClickOutside_)
         delete el._vueClickOutside_
+      }
+    },
+    enteroutside: {
+      bind: (el, binding, vnode) => {
+        const documentHandler = (e) => {
+          console.log('e.target=', e.target)
+          if (el.contains(e.target)) {
+            return false
+          }
+          console.log('binding.expression=', binding.expression)
+          if (binding.expression) {
+            binding.value(e)
+          }
+        }
+        el._vueClickOutside_ = documentHandler
+        // document.addEventListener('keyup', documentHandler)
+      },
+      unbind: (el, binding) => {
+        // document.removeEventListener('keyup', el._vueClickOutside_)
+        // delete el._vueClickOutside_
       }
     }
   },
@@ -85,6 +117,7 @@ export default {
     return {
       queryString: this.value,
       flag: false,
+      activeFlag: false,
       currentIndex: null,
       page: {
         pageNum: 1,
@@ -93,8 +126,8 @@ export default {
     }
   },
   watch: {
-    queryString(val, old) {
-      if(val !== old){
+    queryString (val, old) {
+      if (val !== old) {
         this.page.pageNum = 1
         this.$refs.ul && (this.$refs.ul.scrollTop = 0)
       }
@@ -132,10 +165,47 @@ export default {
       this.currentIndex = index
     },
     selectChange (item, options) {
-      this.$emit('change-input', {inputTitle: 'queryString', item: item})
+      this.$emit('change-input', { inputTitle: 'queryString', item: item })
+    },
+    highlight (index) {
+      if (index < 0) {
+        this.currentIndex = -1
+        return
+      }
+      if (index >= this.options.length) {
+        index = this.options.length - 1
+      }
+      let li = this.$refs.lis[index]
+      let ul = this.$refs.ul
+      let scrollTop = ul.scrollTop
+      let offsetTop = li.offsetTop
+      if (offsetTop + li.scrollHeight > (scrollTop + ul.clientHeight)) {
+        ul.scrollTop += li.scrollHeight
+      }
+      if (offsetTop < scrollTop) {
+        ul.scrollTop -= li.scrollHeight
+      }
+      this.currentIndex = index
+    },
+    handleKeyEnter (e) {
+      if (this.flag && this.currentIndex >= 0 && this.currentIndex < this.options.length) {
+        e.preventDefault()
+        this.selectChange(this.options[this.currentIndex])
+      } else {
+        this.$emit('change-input', { inputTitle: 'queryString', item: {} })
+        this.$nextTick(_ => {
+          this.options = []
+          this.currentIndex = -1
+        })
+      }
+      // this.close()
+      this.activeFlag = true
+      console.log('this.$refs.input=', this.$refs.input.innerHTML)
+      document.removeEventListener('click', this.$refs.input._vueClickOutside_)
+      delete this.$refs.input._vueClickOutside_
     },
     onScroll () {
-      if(this.$refs.ul.scrollTop > (this.page.pageNum * this.page.pageSize - this.page.pageSize) * this.$refs.lis[0].offsetHeight){
+      if (this.$refs.ul.scrollTop > (this.page.pageNum * this.page.pageSize - this.page.pageSize) * this.$refs.lis[0].offsetHeight) {
         this.page.pageNum++
         this.$emit('next-page', this.page.pageNum)
       }
