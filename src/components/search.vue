@@ -107,6 +107,14 @@ export default {
         el._vueClickOutside_ = documentHandler
         // document.addEventListener('keyup', documentHandler)
       },
+      inserted: (el, binding) => {
+        console.log('el===', el)
+        console.log('binding===', binding)
+      },
+      update: (el, binding) => {
+        console.log('el===', el)
+        console.log('binding===', binding)
+      },
       unbind: (el, binding) => {
         // document.removeEventListener('keyup', el._vueClickOutside_)
         // delete el._vueClickOutside_
