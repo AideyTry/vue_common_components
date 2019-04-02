@@ -1,3 +1,10 @@
+<!--
+ * @Author: DaiLinBo
+ * @LastEditors: DaiLinBo
+ * @Description: 
+ * @Date: 2019-03-20 22:43:26
+ * @LastEditTime: 2019-04-02 20:36:17
+ -->
 <template>
   <div class="search-wraper">
     <el-input
@@ -10,6 +17,7 @@
       @keydown.down.native.prevent="highlight(currentIndex + 1)"
       @keydown.enter.native="handleKeyEnter"
       v-clickoutside="close"
+      v-enteroutside="close"
     >
     </el-input>
     <ul
@@ -68,17 +76,17 @@ export default {
     },
     clickoutside: {
       bind: (el, binding, vnode) => {
-        console.log('el.target=', el.target)
-        console.log('binding.expression=', binding.expression)
         const documentHandler = (e) => {
+          console.log('e.target1=', e.target)
+          console.log('binding.expression1=', binding.expression)
           if (el.contains(e.target)) {
             return false
           }
           if (binding.expression) {
+            console.log('binding.expression1=',binding.expression)
             binding.value(e)
           }
         }
-        console.log('el=', el)
         el._vueClickOutside_ = documentHandler
         document.addEventListener('click', documentHandler)
 
@@ -94,30 +102,28 @@ export default {
     },
     enteroutside: {
       bind: (el, binding, vnode) => {
-        const documentHandler = (e) => {
-          console.log('e.target=', e.target)
-          if (el.contains(e.target)) {
+        const documentHandlerEnter = (e) => {
+          console.log('e22=', e)
+          console.log('e.target22=', e.target)
+          console.log('binding.expression22=', binding.expression)
+          if (e.keyCode != 13) {
             return false
           }
-          console.log('binding.expression=', binding.expression)
           if (binding.expression) {
+            console.log('binding.expression22=',binding.expression)
             binding.value(e)
           }
         }
-        el._vueClickOutside_ = documentHandler
-        // document.addEventListener('keyup', documentHandler)
+        el._vueEnterOutside_ = documentHandlerEnter
+        document.addEventListener('keydown', documentHandlerEnter)
       },
       inserted: (el, binding) => {
-        console.log('el===', el)
-        console.log('binding===', binding)
       },
       update: (el, binding) => {
-        console.log('el===', el)
-        console.log('binding===', binding)
       },
       unbind: (el, binding) => {
-        // document.removeEventListener('keyup', el._vueClickOutside_)
-        // delete el._vueClickOutside_
+        document.removeEventListener('keydown', el._vueEnterOutside_)
+        delete el._vueEnterOutside_
       }
     }
   },
@@ -166,7 +172,8 @@ export default {
       }
       this.$emit('text-changed', this.queryString)
     },
-    close () {
+    close (event) {
+      console.log('event=', event)
       this.flag = false
     },
     mouseEnter (index) {
