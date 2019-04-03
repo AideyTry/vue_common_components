@@ -1,0 +1,15 @@
+[ignore]
+.*/node_modules/.*
+.*/dist/.*
+.*/.vscode/.*
+[include]
+
+[libs]
+
+[lints]
+
+[options]
+module.file_ext=.vue
+module.file_ext=.js
+module.file_ext=.jsx
+[strict]

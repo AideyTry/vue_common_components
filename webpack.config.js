@@ -7,6 +7,7 @@ const htmlPlugin = new HtmlWebPackPlugin({
   filename: 'index.html' // 生成的内存中首页的名称
 })
 
+// const FlowWebpackPlugin = require('flow-webpack-plugin')
 module.exports = {
   mode: 'development',
   // context: path.resolve(__dirname,'./src'), //context是webpack编译时候的基础目录，入口起点（entry）会相对于此目录查找；若不配置，则默认值为当前目录
@@ -58,6 +59,9 @@ module.exports = {
   plugins: [
     htmlPlugin,
     new VueLoaderPlugin(),
+    // new FlowWebpackPlugin({
+    //   flowArgs: ['check']
+    // }),
     new webpack.HotModuleReplacementPlugin() //热更新
   ],
   // devtoll: 'cheap-module-eval-source-map', //主要用户更快的构建速度
