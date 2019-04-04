@@ -1,3 +1,10 @@
+<!--
+ * @Author: DaiLinBo
+ * @LastEditors: DaiLinBo
+ * @Description: 
+ * @Date: 2019-04-03 23:42:59
+ * @LastEditTime: 2019-04-04 18:16:56
+ -->
 <template>
   <div class="search-wrap">
     <search

@@ -1,9 +1,11 @@
 <!--
  * @Author: DaiLinBo
  * @LastEditors: DaiLinBo
- * @Description: 
+ * @Description: 搜索公共组件
+ * @params 
+ * @methods 
  * @Date: 2019-03-20 22:43:26
- * @LastEditTime: 2019-04-02 20:36:17
+ * @LastEditTime: 2019-04-04 18:25:44
  -->
 <template>
   <div class="search-wraper">
@@ -74,6 +76,9 @@ export default {
       unbind: (el, binding) => {
       }
     },
+    /**
+     * @description 自定义指令v-clickoutside，点击弹框职位关闭弹框
+     */
     clickoutside: {
       bind: (el, binding, vnode) => {
         const documentHandler = (e) => {
@@ -83,7 +88,7 @@ export default {
             return false
           }
           if (binding.expression) {
-            console.log('binding.expression1=',binding.expression)
+            console.log('binding.expression1=', binding.expression)
             binding.value(e)
           }
         }
@@ -100,6 +105,9 @@ export default {
         delete el._vueClickOutside_
       }
     },
+    /**
+     * @description 自定义指令v-enteroutside，点击弹框职位关闭弹框
+     */
     enteroutside: {
       bind: (el, binding, vnode) => {
         const documentHandlerEnter = (e) => {
@@ -110,7 +118,7 @@ export default {
             return false
           }
           if (binding.expression) {
-            console.log('binding.expression22=',binding.expression)
+            console.log('binding.expression22=', binding.expression)
             binding.value(e)
           }
         }
@@ -140,6 +148,9 @@ export default {
     }
   },
   watch: {
+    /**
+     * @description 监听输入框输入的数据，对比新旧值，如果值发生改变了，则重新搜索回到初始状态
+     */
     queryString (val, old) {
       if (val !== old) {
         this.page.pageNum = 1
@@ -219,6 +230,9 @@ export default {
       document.removeEventListener('click', this.$refs.input._vueClickOutside_)
       delete this.$refs.input._vueClickOutside_
     },
+    /**
+     * @description: 滚动加载页面
+     */
     onScroll () {
       if (this.$refs.ul.scrollTop > (this.page.pageNum * this.page.pageSize - this.page.pageSize) * this.$refs.lis[0].offsetHeight) {
         this.page.pageNum++
