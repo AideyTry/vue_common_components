@@ -3,7 +3,7 @@
  * @LastEditors: DaiLinBo
  * @Description: 
  * @Date: 2019-04-03 23:42:59
- * @LastEditTime: 2019-04-04 18:16:56
+ * @LastEditTime: 2019-04-05 00:21:53
  -->
 <template>
   <div class="search-wrap">
@@ -42,6 +42,7 @@ export default {
   },
   mounted () {
     // this.getCars()
+    console.log('this=', this)
   },
   methods: {
     getCars (flag = false) {
@@ -79,7 +80,7 @@ export default {
       this.page.pageNum = pageNum
       this.getCars(true)
     },
-    changeInput(obj){
+    changeInput (obj) {
       this.$refs.search[obj.inputTitle] = `${obj.item.code || ''} ${obj.item.name || ''} ${obj.item.phone || ''}`
     }
   }

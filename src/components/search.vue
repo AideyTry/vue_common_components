@@ -5,7 +5,7 @@
  * @params 
  * @methods 
  * @Date: 2019-03-20 22:43:26
- * @LastEditTime: 2019-04-04 18:25:44
+ * @LastEditTime: 2019-04-06 23:26:10
  -->
 <template>
   <div class="search-wraper">
@@ -82,6 +82,7 @@ export default {
     clickoutside: {
       bind: (el, binding, vnode) => {
         const documentHandler = (e) => {
+          console.log('e1=', e)
           console.log('e.target1=', e.target)
           console.log('binding.expression1=', binding.expression)
           if (el.contains(e.target)) {
@@ -89,6 +90,7 @@ export default {
           }
           if (binding.expression) {
             console.log('binding.expression1=', binding.expression)
+            console.log('binding.value(e)=', binding.value(e))
             binding.value(e)
           }
         }
@@ -112,9 +114,7 @@ export default {
       bind: (el, binding, vnode) => {
         const documentHandlerEnter = (e) => {
           console.log('e22=', e)
-          console.log('e.target22=', e.target)
-          console.log('binding.expression22=', binding.expression)
-          if (e.keyCode != 13) {
+          if (e.keyCode !== 13) {
             return false
           }
           if (binding.expression) {
@@ -154,6 +154,7 @@ export default {
     queryString (val, old) {
       if (val !== old) {
         this.page.pageNum = 1
+        console.log('this.$refs.ul=', this.$refs.ul)
         this.$refs.ul && (this.$refs.ul.scrollTop = 0)
       }
     }
