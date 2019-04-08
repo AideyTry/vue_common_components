@@ -5,7 +5,7 @@
  * @params 
  * @Events 
  * @Date: 2019-03-20 22:43:26
- * @LastEditTime: 2019-04-08 22:00:10
+ * @LastEditTime: 2019-04-08 23:05:01
  -->
 <template>
   <div class="search-wraper">
@@ -20,6 +20,7 @@
       @keydown.enter.native="handleKeyEnter"
       v-clickoutside="close"
       v-enteroutside="close"
+      data-flag="flag"
     >
     </el-input>
     <ul
@@ -91,11 +92,6 @@ export default {
         }
         el._vueClickOutside_ = documentHandler
         document.addEventListener('click', documentHandler)
-
-        // if (this.activeFlag) {
-        //   document.removeEventListener('click', el._vueClickOutside_)
-        //   delete el._vueClickOutside_
-        // }
       },
       unbind: (el, binding) => {
         document.removeEventListener('click', el._vueClickOutside_)
@@ -108,27 +104,19 @@ export default {
     enteroutside: {
       bind: (el, binding, vnode) => {
         const documentHandlerEnter = (e) => {
-          console.log('e22=', e)
+          if (el.contains(e.target) && e.keyCode !== 13) {
+            el._vueEnterOutside_ = documentHandlerEnter
+            document.addEventListener('keydown', documentHandlerEnter)
+          }
           if (e.keyCode !== 13) {
             return false
           }
           if (binding.expression) {
-            console.log('binding.expression22=', binding.expression)
             binding.value(e)
           }
         }
         el._vueEnterOutside_ = documentHandlerEnter
         document.addEventListener('keydown', documentHandlerEnter)
-      },
-      inserted: (el, binding) => {
-        console.log('elinsert=', el)
-        // document.removeEventListener('keydown', el._vueEnterOutside_)
-        // delete el._vueEnterOutside_
-      },
-      update: (el, binding) => {
-        console.log('elupdate=', el)
-        // document.removeEventListener('keydown', el._vueEnterOutside_)
-        // delete el._vueEnterOutside_
       },
       unbind: (el, binding) => {
         document.removeEventListener('keydown', el._vueEnterOutside_)
@@ -140,7 +128,6 @@ export default {
     return {
       queryString: this.value,
       flag: false,
-      activeFlag: false,
       currentIndex: null,
       page: {
         pageNum: 1,
@@ -155,7 +142,6 @@ export default {
     queryString (val, old) {
       if (val !== old) {
         this.page.pageNum = 1
-        console.log('this.$refs.ul=', this.$refs.ul)
         this.$refs.ul && (this.$refs.ul.scrollTop = 0)
       }
     }
@@ -185,8 +171,7 @@ export default {
       }
       this.$emit('text-changed', this.queryString)
     },
-    close (event) {
-      console.log('event=', event)
+    close () {
       this.flag = false
     },
     mouseEnter (index) {
@@ -226,11 +211,6 @@ export default {
           this.currentIndex = -1
         })
       }
-      // this.close()
-      this.activeFlag = true
-      console.log('this.$refs.input=', this.$refs.input.innerHTML)
-      document.removeEventListener('click', this.$refs.input._vueClickOutside_)
-      delete this.$refs.input._vueClickOutside_
     },
     /**
      * @description: 滚动加载页面
