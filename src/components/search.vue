@@ -3,9 +3,9 @@
  * @LastEditors: DaiLinBo
  * @Description: 搜索公共组件
  * @params 
- * @methods 
+ * @Events 
  * @Date: 2019-03-20 22:43:26
- * @LastEditTime: 2019-04-06 23:26:10
+ * @LastEditTime: 2019-04-08 22:00:10
  -->
 <template>
   <div class="search-wraper">
@@ -82,15 +82,10 @@ export default {
     clickoutside: {
       bind: (el, binding, vnode) => {
         const documentHandler = (e) => {
-          console.log('e1=', e)
-          console.log('e.target1=', e.target)
-          console.log('binding.expression1=', binding.expression)
           if (el.contains(e.target)) {
             return false
           }
           if (binding.expression) {
-            console.log('binding.expression1=', binding.expression)
-            console.log('binding.value(e)=', binding.value(e))
             binding.value(e)
           }
         }
@@ -126,8 +121,14 @@ export default {
         document.addEventListener('keydown', documentHandlerEnter)
       },
       inserted: (el, binding) => {
+        console.log('elinsert=', el)
+        // document.removeEventListener('keydown', el._vueEnterOutside_)
+        // delete el._vueEnterOutside_
       },
       update: (el, binding) => {
+        console.log('elupdate=', el)
+        // document.removeEventListener('keydown', el._vueEnterOutside_)
+        // delete el._vueEnterOutside_
       },
       unbind: (el, binding) => {
         document.removeEventListener('keydown', el._vueEnterOutside_)
