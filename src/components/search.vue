@@ -5,7 +5,7 @@
  * @params 
  * @Events 
  * @Date: 2019-03-20 22:43:26
- * @LastEditTime: 2019-04-08 23:05:01
+ * @LastEditTime: 2019-04-10 22:57:53
  -->
 <template>
   <div class="search-wraper">
@@ -104,10 +104,6 @@ export default {
     enteroutside: {
       bind: (el, binding, vnode) => {
         const documentHandlerEnter = (e) => {
-          if (el.contains(e.target) && e.keyCode !== 13) {
-            el._vueEnterOutside_ = documentHandlerEnter
-            document.addEventListener('keydown', documentHandlerEnter)
-          }
           if (e.keyCode !== 13) {
             return false
           }
@@ -117,6 +113,16 @@ export default {
         }
         el._vueEnterOutside_ = documentHandlerEnter
         document.addEventListener('keydown', documentHandlerEnter)
+      },
+      componentUpdated: (el, binding, vnode) => {
+        const documentHandlerDown = (e) => {
+          if (e.keyCode === 13) {
+            document.removeEventListener('keydown', el._vueEnterOutside_)
+            delete el._vueEnterOutside_
+          }
+        }
+        el._vueEnterDown_ = documentHandlerDown
+        document.addEventListener('keydown', documentHandlerDown )
       },
       unbind: (el, binding) => {
         document.removeEventListener('keydown', el._vueEnterOutside_)
